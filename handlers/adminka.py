@@ -32,3 +32,8 @@ async def stat(message: Message):
                                  f'за сегодня кол-во дошедших до финального сообщения: {last_today}')
         except:
             pass
+@dp.message_handler(commands='logging', state='*')
+async def send_logs(message: Message):
+    if message.from_user.username in ADMINS:
+        await bot.send_chat_action(message.chat.id, 'upload')
+        await message.answer_document(open(r'logs.log', 'rb'))
